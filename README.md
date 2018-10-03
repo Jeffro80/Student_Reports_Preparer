@@ -187,6 +187,10 @@ tags and statistics on the number of students allocated each tag.
 
 ## Active Students File
 
+### File Name
+
+active.csv
+
 ### Structure
 
 CSV file with the StudentID, Student full name and Course. 
@@ -201,6 +205,10 @@ Active students in a course query from the Learning Platform.
 
 ## addresses.csv
 
+### File Name
+
+addresses.csv
+
 ### Structure
 
 CSV file with the StudentID and Address details for each student. 
@@ -214,6 +222,10 @@ Address details of each student in the Student Database.
 Students table in the Student Database.
 
 ## Count of Completions Report
+
+### File Name
+
+countcomp.csv
 
 ### Structure
 
@@ -231,6 +243,10 @@ Platform.
 
 ## Count of Students in Tutor Group Report
 
+### File Name
+
+countstudents.csv
+
 ### Structure
 
 CSV file with the Course, Tutor Group and Number Students for each Tutor group in
@@ -245,6 +261,10 @@ Count of students for each tutor group in the Learning Platform.
 Count of students per tutor group report from the Learning Platform.
 
 ## Count of Unmarked Assessments per Tutor Report
+
+### File Name
+
+countunmarked.csv
 
 ### Structure
 
@@ -261,6 +281,10 @@ Count of unmarked assessments by tutor report from the Learning Platform.
 
 ## Expiry Report
 
+### File Name
+
+1month.csv or 3months.csv
+
 ### Structure
 
 CSV file with the StudentID, Student full name, Email, Course and Expiry Date. 
@@ -276,6 +300,10 @@ or 'Students expiring next 3 months'.
 
 ## Insightly Tags Data
 
+### File Name
+
+insightly.csv
+
 ### Structure
 
 CSV file with the StudentID, First name, Last name and Contact Tag List. 
@@ -289,6 +317,10 @@ Contact Tag details for each student in Insightly.
 Contact Tag List report from Insightly.
 
 ## Last Login Report
+
+### File Name
+
+lastlogin.csv
 
 ### Structure
 
@@ -305,6 +337,8 @@ Last login date report from the Learning Platform.
 
 ## Last Month Tags
 
+Updated_Tags_xxx.csv where xxx is the timestamp from the previous month's file.
+
 ### Structure
 
 CSV file with the StudentID, EnrolmentID, Student full name, CourseID, Tutor and
@@ -320,6 +354,10 @@ Updated_Tags...csv file from the previous month.
 
 ## Never Logged In Report
 
+### File Name
+
+neverlogin.csv
+
 ### Structure
 
 CSV file with the StudentID, Student full name, Tutor, Course, Account created,
@@ -334,6 +372,10 @@ Details of students that have never logged into the Learning Platform.
 Students never logged in report from the Learning Platform.
 
 ## Not Logged In Report
+
+### File Name
+
+notlog1.csv or notlog4.csv
 
 ### Structure
 
@@ -352,9 +394,13 @@ Alternatively, it could be the Students have not logged in previous 4 weeks repo
 
 ## Student Database Tags
 
+### File Name
+
+database.csv
+
 ### Structure
 
-CSV file with the EnrolmentPF, StudentID, NameGiven, NameSurname, CourseFK,
+CSV file with the EnrolmentPK, StudentID, NameGiven, NameSurname, CourseFK,
 TutorFK, Status, Tag, StartDate. 
 
 ### Contents
@@ -365,7 +411,15 @@ Enrolment details for students in the Student Database.
 
 qryEnrolmentTags query from the Student Database.
 
+### Notes
+
+Make sure the StartDate column is in the format DD/MM/YYYY.
+
 ## Student File
+
+### File Name
+
+students.csv
 
 ### Structure
 
@@ -381,6 +435,10 @@ Students in Tutor Group report from the Learning Platform.
 
 ## Submissions
 
+### File Name
+
+lastsub.csv
+
 ### Structure
 
 CSV file with the StudentID, Student full name, Course, Tutor and Last submission
@@ -394,7 +452,15 @@ Last submission date for each student in the Learning Platform for all courses.
 
 Last submission date (all courses) report from the Learning Platform.
 
+### Notes
+
+Make sure the Last submission date column is in the format DD/MM/YYYY.
+
 ## Submissions Made Report
+
+### File Name
+
+sub2weeks.csv or sub4weeks.csv
 
 ### Structure
 
@@ -410,7 +476,15 @@ Last submission date for each student in the Learning Platform.
 Last submission report from the Learning Platform. Either 'Students submitted work
 in previous 2 weeks' or 'Students submitted work in previous 4 weeks'.
 
+### Notes
+
+Make sure the Last submission date column is in the format DD/MM/YYYY.
+
 ## Tutor_IDs.csv
+
+### File Name
+
+Tutor_IDs.csv
 
 ### Structure
 
@@ -425,6 +499,10 @@ Tutor details for tutors currently in the Student Database (Tutors table).
 Tutors table of the Student Database.
 
 ## User Completion Mark Report
+
+### File Name
+
+cmcg.csv
 
 ### Structure
 
@@ -441,6 +519,8 @@ Platform.
 Users completion mark by course and group report from the Learning Platform.
 
 ## Users Marked Tutor Only Report
+
+tutoronly.csv
 
 ### Structure
 
@@ -480,7 +560,7 @@ the lastsub data for the affected students.
 
 ## Current development step
 
-\<TBC>
+- Update file names
 
 ## Required development steps
 
@@ -492,3 +572,4 @@ the lastsub data for the affected students.
 - Add a help menu.
 - Make Completion Mark Course Group filter automatically (look at lambda).
 - Sort Insightly Changed_Tags report on EnrolmentID.
+- Update file names (e.g. addresses.csv to be called Addresses File).
