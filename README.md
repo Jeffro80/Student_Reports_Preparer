@@ -15,7 +15,8 @@ The app outputs xls files containing the report data.
 ## Version
 
 Version Number 1.0  
-Last updated 25 September 2018
+App last updated 25 September 2018  
+Readme last updated 9 October 2018
 
 # Operation
 
@@ -31,63 +32,56 @@ dialog.
 Note: Where a required file has text in brackets following it, this text is the
 name of the report in the Learning Platform that the data is pulled from.
 
-## Prepare Student Expiry Report - 1 Month
+## Prepare Complete Tutor Only Report
 
-Prepares a report of students that expire from a course in the next month.
-
-### Required Files
-
-- addresses.csv
-- Expiry Report (Students expiring this month)
-
-## Prepare Student Expiry Report - 3 Months
-
-Prepares a report of students that expire from a course in the next three months.
+Prepares a report showing the students that have been marked complete by their
+tutor but not by the Head Tutor or Manager.
 
 ### Required Files
 
-- addresses.csv
-- Expiry Report (Students expiring next 3 months)
+- Users Marked Tutor Only Report (Users marked by tutor but not head tutor or 
+manager)
 
-## Prepare Submissions Made Report - 2 Weeks
+## Prepare Completion Mark Course Group Report
 
-Prepares a report of students that have made a submission in the last 2 weeks.
-Used for tracking part-time student submissions.
-
-### Required Files
-
-- Submissions Made Report (Students submitted work in previous 2 weeks)
-
-## Prepare Submissions Made Report - 4 Weeks
-
-Prepares a report of students that have made a submission in the last 4 weeks.
-Used for tracking online student submissions.
+Prepares a report showing the completion status for each student for the columns
+of Tutor, Head Tutor and Manager.
 
 ### Required Files
 
-- Submissions Made Report (Students submitted work in previous 4 weeks)
+- User Completion Mark Report (Users completion mark by course and group)
 
-## Prepare Students Not Submitted Report - 2 Weeks
+## Prepare Count of Completions Tutor Group Report
 
-Prepares a report of students that have not made a submission in the last 2 weeks.
-Used for tracking part-time student submissions.
-
-### Required Files
-
-- Active Students File
-- Student File
-- Submissions Made Report (Students submitted work in previous 2 weeks)
-
-## Prepare Students Not Submitted Report - 4 Weeks
-
-Prepares a report of students that have not made a submission in the last 4 weeks.
-Used for tracking online student submissions.
+Prepares a report showing the number of students for each tutor group that have
+been marked as complete. It only shows students in the Part-time courses.
 
 ### Required Files
 
-- Active Students File
-- Student File
-- Submissions Made Report (Students submitted work in previous 4 weeks)
+- Count of Completions Report (Count of completions by tutor and group in courses)
+
+## Prepare Count of Students Per Tutor Report
+
+Prepares a report showing the number of students for each tutor group.
+
+### Required Files
+
+- Count of Students in Tutor Group Report (Count of students per tutor group)
+
+## Prepare Count of Unmarked Assessments Report
+
+Prepares a report showing the number of unmarked assessments for each tutor group.
+
+### Required Files
+
+- Count of Unmarked Assessments per Tutor Report (Count of unmarked assessments
+by tutor)
+
+## Prepare Insightly Tags Updates Report
+
+Prepares a number of reports showing the changes that need to be made to Insightly
+tags and statistics on the number of students allocated each tag.
+
 
 ## Prepare Last Login Report
 
@@ -125,55 +119,63 @@ Learning Platform during the past 4 weeks. Used to track online students.
 
 - Not Logged In Report (Students have not logged in previous 4 weeks)
 
-## Prepare Completion Mark Course Group Report
+## Prepare Student Expiry Report - 1 Month
 
-Prepares a report showing the completion status for each student for the columns
-of Tutor, Head Tutor and Manager.
-
-### Required Files
-
-- User Completion Mark Report (Users completion mark by course and group)
-
-## Prepare Complete Tutor Only Report
-
-Prepares a report showing the students that have been marked complete by their
-tutor but not by the Head Tutor or Manager.
+Prepares a report of students that expire from a course in the next month.
 
 ### Required Files
 
-- Users Marked Tutor Only Report (Users marked by tutor but not head tutor or 
-manager)
+- addresses.csv
+- Expiry Report (Students expiring this month)
 
-## Prepare Count of Completions Tutor Group Report
+## Prepare Student Expiry Report - 3 Months
 
-Prepares a report showing the number of students for each tutor group that have
-been marked as complete. It only shows students in the Part-time courses.
-
-### Required Files
-
-- Count of Completions Report (Count of completions by tutor and group in courses)
-
-## Prepare Count of Unmarked Assessments Report
-
-Prepares a report showing the number of unmarked assessments for each tutor group.
+Prepares a report of students that expire from a course in the next three months.
 
 ### Required Files
 
-- Count of Unmarked Assessments per Tutor Report (Count of unmarked assessments
-by tutor)
+- addresses.csv
+- Expiry Report (Students expiring next 3 months)
 
-## Prepare Count of Students Per Tutor Report
+## Prepare Students Not Submitted Report - 2 Weeks
 
-Prepares a report showing the number of students for each tutor group.
+Prepares a report of students that have not made a submission in the last 2 weeks.
+Used for tracking part-time student submissions.
 
 ### Required Files
 
-- Count of Students in Tutor Group Report (Count of students per tutor group)
+- Active Students File
+- Student File
+- Submissions Made Report (Students submitted work in previous 2 weeks)
 
-## Prepare Insightly Tags Updates Report
+## Prepare Students Not Submitted Report - 4 Weeks
 
-Prepares a number of reports showing the changes that need to be made to Insightly
-tags and statistics on the number of students allocated each tag.
+Prepares a report of students that have not made a submission in the last 4 weeks.
+Used for tracking online student submissions.
+
+### Required Files
+
+- Active Students File
+- Student File
+- Submissions Made Report (Students submitted work in previous 4 weeks)
+
+## Prepare Submissions Made Report - 2 Weeks
+
+Prepares a report of students that have made a submission in the last 2 weeks.
+Used for tracking part-time student submissions.
+
+### Required Files
+
+- Submissions Made Report (Students submitted work in previous 2 weeks)
+
+## Prepare Submissions Made Report - 4 Weeks
+
+Prepares a report of students that have made a submission in the last 4 weeks.
+Used for tracking online student submissions.
+
+### Required Files
+
+- Submissions Made Report (Students submitted work in previous 4 weeks)
 
 ### Required Files
 
@@ -191,13 +193,13 @@ tags and statistics on the number of students allocated each tag.
 
 active.csv
 
-### Structure
-
-CSV file with the StudentID, Student full name and Course. 
-
 ### Contents
 
 Each student that is active in the Learning Platform (active in a course).
+
+### Structure
+
+CSV file with the StudentID, Student full name and Course. 
 
 ### Source
 
@@ -209,13 +211,13 @@ Active students in a course query from the Learning Platform.
 
 addresses.csv
 
-### Structure
-
-CSV file with the StudentID and Address details for each student. 
-
 ### Contents
 
 Address details of each student in the Student Database.
+
+### Structure
+
+CSV file with the StudentID and Address details for each student. 
 
 ### Source
 
@@ -227,14 +229,14 @@ Students table in the Student Database.
 
 countcomp.csv
 
+### Contents
+
+Count of completions for each tutor group in the Learning Platform.
+
 ### Structure
 
 CSV file with the Course, Tutor and Completions for each Tutor group in the
 Learning Platform.
-
-### Contents
-
-Count of completions for each tutor group in the Learning Platform.
 
 ### Source
 
@@ -247,14 +249,14 @@ Platform.
 
 countstudents.csv
 
+### Contents
+
+Count of students for each tutor group in the Learning Platform.
+
 ### Structure
 
 CSV file with the Course, Tutor Group and Number Students for each Tutor group in
 the Learning Platform.
-
-### Contents
-
-Count of students for each tutor group in the Learning Platform.
 
 ### Source
 
@@ -266,14 +268,14 @@ Count of students per tutor group report from the Learning Platform.
 
 countunmarked.csv
 
+### Contents
+
+Count of unmarked assessments for each tutor group in the Learning Platform.
+
 ### Structure
 
 CSV file with the Course, Tutor and Number assessments for each Tutor group in the
 Learning Platform.
-
-### Contents
-
-Count of unmarked assessments for each tutor group in the Learning Platform.
 
 ### Source
 
@@ -285,13 +287,13 @@ Count of unmarked assessments by tutor report from the Learning Platform.
 
 1month.csv or 3months.csv
 
-### Structure
-
-CSV file with the StudentID, Student full name, Email, Course and Expiry Date. 
-
 ### Contents
 
 Student Expiry Dates from the Learning Platform.
+
+### Structure
+
+CSV file with the StudentID, Student full name, Email, Course and Expiry Date. 
 
 ### Source
 
@@ -304,13 +306,13 @@ or 'Students expiring next 3 months'.
 
 insightly.csv
 
-### Structure
-
-CSV file with the StudentID, First name, Last name and Contact Tag List. 
-
 ### Contents
 
 Contact Tag details for each student in Insightly.
+
+### Structure
+
+CSV file with the StudentID, First name, Last name and Contact Tag List. 
 
 ### Source
 
@@ -322,14 +324,14 @@ Contact Tag List report from Insightly.
 
 lastlogin.csv
 
+### Contents
+
+Last login date for students on the Learning Platform.
+
 ### Structure
 
 CSV file with the StudentID, Student full name, Tutor, Course, Last Access and
 Email. 
-
-### Contents
-
-Last login date for students on the Learning Platform.
 
 ### Source
 
@@ -339,14 +341,14 @@ Last login date report from the Learning Platform.
 
 Updated_Tags_xxx.csv where xxx is the timestamp from the previous month's file.
 
+### Contents
+
+Updated Tags for Insightly from the previous month's analysis.
+
 ### Structure
 
 CSV file with the StudentID, EnrolmentID, Student full name, CourseID, Tutor and
 Updated_Tags. 
-
-### Contents
-
-Updated Tags for Insightly from the previous month's analysis.
 
 ### Source
 
@@ -358,14 +360,14 @@ Updated_Tags...csv file from the previous month.
 
 neverlogin.csv
 
+### Contents
+
+Details of students that have never logged into the Learning Platform.
+
 ### Structure
 
 CSV file with the StudentID, Student full name, Tutor, Course, Account created,
 Report date and Email. 
-
-### Contents
-
-Details of students that have never logged into the Learning Platform.
 
 ### Source
 
@@ -377,15 +379,15 @@ Students never logged in report from the Learning Platform.
 
 notlog1.csv or notlog4.csv
 
-### Structure
-
-CSV file with the StudentID, Student full name, Tutor, Course, Last access and
-Email. 
-
 ### Contents
 
 Details of students that have not logged into the Learning Platform during the
 relevant period of weeks.
+
+### Structure
+
+CSV file with the StudentID, Student full name, Tutor, Course, Last access and
+Email. 
 
 ### Source
 
@@ -398,14 +400,14 @@ Alternatively, it could be the Students have not logged in previous 4 weeks repo
 
 database.csv
 
+### Contents
+
+Enrolment details for students in the Student Database.
+
 ### Structure
 
 CSV file with the EnrolmentPK, StudentID, NameGiven, NameSurname, CourseFK,
 TutorFK, Status, Tag, StartDate. 
-
-### Contents
-
-Enrolment details for students in the Student Database.
 
 ### Source
 
@@ -421,13 +423,13 @@ Make sure the StartDate column is in the format DD/MM/YYYY.
 
 students.csv
 
-### Structure
-
-CSV file with the Course, Tutor, StudentID and Student full name. 
-
 ### Contents
 
 Students and the Tutor group they are in on the Learning Platform.
+
+### Structure
+
+CSV file with the Course, Tutor, StudentID and Student full name. 
 
 ### Source
 
@@ -439,14 +441,14 @@ Students in Tutor Group report from the Learning Platform.
 
 lastsub.csv
 
+### Contents
+
+Last submission date for each student in the Learning Platform for all courses.
+
 ### Structure
 
 CSV file with the StudentID, Student full name, Course, Tutor and Last submission
 date. 
-
-### Contents
-
-Last submission date for each student in the Learning Platform for all courses.
 
 ### Source
 
@@ -462,14 +464,14 @@ Make sure the Last submission date column is in the format DD/MM/YYYY.
 
 sub2weeks.csv or sub4weeks.csv
 
+### Contents
+
+Last submission date for each student in the Learning Platform.
+
 ### Structure
 
 CSV file with the StudentID, Student full name, Email, Course, Tutor, Assignment
 name and Last submission date. 
-
-### Contents
-
-Last submission date for each student in the Learning Platform.
 
 ### Source
 
@@ -486,13 +488,13 @@ Make sure the Last submission date column is in the format DD/MM/YYYY.
 
 Tutor_IDs.csv
 
-### Structure
-
-CSV file with the Tutor ID, First Name, Last Name.
-
 ### Contents
 
 Tutor details for tutors currently in the Student Database (Tutors table).
+
+### Structure
+
+CSV file with the Tutor ID, First Name, Last Name.
 
 ### Source
 
@@ -504,15 +506,15 @@ Tutors table of the Student Database.
 
 cmcg.csv
 
-### Structure
-
-CSV file with the Course, Tutor group, StudentID, Student full name, Tutor,
-Head Tutor and Manager. 
-
 ### Contents
 
 Completion status (Tutor, Head Tutor, Manager) for each student in the Learning
 Platform.
+
+### Structure
+
+CSV file with the Course, Tutor group, StudentID, Student full name, Tutor,
+Head Tutor and Manager. 
 
 ### Source
 
@@ -522,16 +524,16 @@ Users completion mark by course and group report from the Learning Platform.
 
 tutoronly.csv
 
-### Structure
-
-CSV file with the Course, Tutor group, StudentID, Student full name, Tutor,
-Head Tutor and Manager. 
-
 ### Contents
 
 Completion status (Tutor, Head Tutor, Manager) for each student in the Learning
 Platform that has been marked complete by their tutor but not by the Head Tutor
 or Manager.
+
+### Structure
+
+CSV file with the Course, Tutor group, StudentID, Student full name, Tutor,
+Head Tutor and Manager. 
 
 ### Source
 
