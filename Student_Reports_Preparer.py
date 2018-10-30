@@ -972,6 +972,29 @@ def check_tu(tu_data):
         return False, warnings
 
 
+def check_tutor_ids(tutors, students):
+    """Check Tutor IDs in student data are in Tutor ID list.
+    
+    Checks that the Tutor ID for each student is contained in the list of valid
+    Tutor IDs. If invalid Tutor IDs are found they students concerned are
+    printed to the screen, an error file is created and the program exits.
+    
+    Args:
+        tutors (list): List of valid Tutor IDs.
+        students (list): List of lists of data for each student.
+    """
+    errors = []
+    for student in students:
+        if student[5] not in tutors:
+            errors.append('Tutor ID {} appears for the Student with the '
+                          'Student ID number of {}. This Tutor ID does not '
+                          'appear in the list of valid Tutor IDs.'.format(
+                                  student[5], student[1]))
+    # Check if any errors have been identified, save error log if they have
+    if len(errors) > 0:
+        ft.process_error_log(errors, 'Tutor_ID_Numbers')
+
+
 def check_ua(report_data):
     """Return warnings for information in Count unmarked assess report file.
 
@@ -2795,12 +2818,6 @@ def process_insightly_tags():
     required_files = ['Student Database Tags', 'Tutor IDs File', 'Submissions',
                       'Insightly Tags Data', 'Last Month Tags']
     ad.confirm_files('Insightly Tags Report', required_files)
-    # Get name for the Student Database Tags data file and then load
-    sd_data, to_add, warnings_to_add = load_data('Student Database Tags')
-    if to_add:
-        warnings_to_process = True
-        for line in warnings_to_add:
-            warnings.append(line)
     # Variables for column names
     cid_name  = 'Course ID'
     course_name = 'Course'
@@ -2814,6 +2831,25 @@ def process_insightly_tags():
     tag_name = 'Tag'
     tid_name  = 'Tutor ID'
     tutor_name = 'Tutor'
+    # Load Tutor_Id.csv
+    tutors_data, to_add, warnings_to_add = load_data('Tutor_IDs_', 'Tutor_IDs')
+    if to_add:
+        warnings_to_process = True
+        for line in warnings_to_add:
+            warnings.append(line)
+    # Create a DataFrame for the Tutor IDs data
+    headings = [tid_name, fname_name, lname_name]
+    tutors = pd.DataFrame(data = tutors_data, columns = headings)
+    # Create a list of Tutor ID's
+    tutor_ids = tutors[tid_name].unique()
+    # Get name for the Student Database Tags data file and then load
+    sd_data, to_add, warnings_to_add = load_data('Student Database Tags')
+    if to_add:
+        warnings_to_process = True
+        for line in warnings_to_add:
+            warnings.append(line)
+    # Go through tutor ids in database data and make sure present in tutor data
+    check_tutor_ids(tutor_ids, sd_data)
     # Create a DataFrame for the Student Database Tags data
     headings = [eid_name, sid_name, fname_name, lname_name, cid_name, tid_name,
                 status_name, tag_name, sdate_name]
