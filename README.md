@@ -482,7 +482,7 @@ in previous 2 weeks' or 'Students submitted work in previous 4 weeks'.
 
 Make sure the Last submission date column is in the format DD/MM/YYYY.
 
-## Tutor_IDs.csv
+## Tutor IDs File
 
 ### File Name
 
@@ -562,7 +562,7 @@ the lastsub data for the affected students.
 
 ## Current development step
 
-- Update file names
+- Handling unknown Tutor IDs
 
 ## Required development steps
 
