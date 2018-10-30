@@ -1193,15 +1193,7 @@ def convert_e_date(students, sd_df_students):
     red_day = 83
     orange_day = 55
     print('\nConverting Enrolment Dates')
-    num_students = len(students) # For calculating % complete
-    n = 0
     for student in students:
-        # Display progress
-        '''
-        n += 1
-        progress = round((n/num_students) * 100)
-        print("\rProgress: {}{}".format(progress, '%'), end="", flush=True)
-        '''
         if student[0] not in sd_df_students: # Skip non-active students
             continue
         updated_student = []
