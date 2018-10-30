@@ -15,8 +15,8 @@ The app outputs xls files containing the report data.
 ## Version
 
 Version Number 1.0  
-App last updated 25 September 2018  
-Readme last updated 9 October 2018
+App last updated 31 October 2018  
+Readme last updated 31 October 2018
 
 # Operation
 

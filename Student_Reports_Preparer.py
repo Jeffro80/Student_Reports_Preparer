@@ -1,29 +1,8 @@
 # Student Report Preparer
-# Version 1.0 25 September 2018
+# Version 1.0 31 October 2018
 # Created by Jeff Mitchell
 # Takes in student report output files and prepares them for sending
 # to management
-
-# To Add:
-
-# - Insightly Tags - Order Updated_Tags report on Student ID number
-# - Add a help menu
-# - Make Completion Mark Course Group filter automatically (look at lambda)
-# - Sort Insightly Changed_Tags report on EnrolmentID
-
-# Known issues
-
-# - If file name changed (e.g. typed in wrong) loading and loaded messages use
-# the old file name
-# - Double up of Student ID functions (df)
-# - If tutor has been removed from Learning Platform (e.g. withdrawn, expired 
-# or graduated student) the tutor will be missing from lastsub data. Need to 
-# add tutor from database data in this case.
-
-# To Fix:
-
-# - Add check that Tutor code is present in Tutor_Ids.csv (currently crashes
-# - if unknown tutor id provided)
    
 
 import copy
@@ -2847,22 +2826,8 @@ def process_insightly_tags():
     headings = [eid_name, sid_name, fname_name, lname_name, cid_name, tid_name,
                 status_name, tag_name, sdate_name]
     sd_df = pd.DataFrame(data = sd_data, columns = headings)
-    """
-    # Remove non-online courses from sd_df
-    sd_df[cid_name] = sd_df[cid_name].apply(list_non_on_code)
-    sd_df = sd_df.drop(sd_df.index[sd_df[cid_name] == 'Skip'])
-    # Remove non-active students from sd_df
-    sd_df[status_name] = sd_df[status_name].apply(list_non_active)
-    sd_df = sd_df.drop(sd_df.index[sd_df[status_name] == 'Skip'])
-    """
     # Convert Start Dates to "DD/MM/YYYY"
     sd_df[sdate_name] = sd_df[sdate_name].apply(da.clean_date)
-    """
-    # Select just the desired columns for sd_df
-    headings = [eid_name, sid_name, fname_name, lname_name, tid_name, tag_name,
-                sdate_name]
-    sd_df = sd_df[headings]
-    """
     # Get name for the Insightly Tags data file and then load
     id_data, to_add, warnings_to_add = load_data('Insightly Tag Data')
     if to_add:
@@ -3029,11 +2994,6 @@ def process_insightly_tags():
     tutor_stats, change_list = get_tutor_stats(prev_data, this_data)
     # Extract Dictionary items into a list
     change_count = get_tutor_changes(tutor_stats, change_list)
-    '''
-    # Replace Tutor ID with Tutor Name
-    headings = [tid_name, fname_name, lname_name]
-    change_count = replace_tutor_name(change_count, tutors, headings)
-    '''
     # Create a DataFrame
     headings = ['Tutor', 'Progressed', 'Regressed', 'Maintained']
     change_count_df = pd.DataFrame(data = change_count, columns = headings)
@@ -3702,11 +3662,10 @@ def tags_count(tags_data, headings):
     """
     # Create a list of tutors from tags_data
     tutors = tags_data[headings[4]].unique()
-    # Create a dictionary with tutor names
-    # Create a list with the tag colours
     tags = ['Green', 'Orange', 'Red', 'Black', 'Purple']
     tags_count = {}
     print('\nCounting Tags per Colour')
+    # Create and populate dictionary to hold tags per tutor
     for tutor in tutors:
         tags_count[tutor] = {}
         for tag in tags:
@@ -3776,8 +3735,6 @@ def update_tags(tag_list):
             tag = 'Black'
         updated_student.append(tag)
         updated_students.append(updated_student)
-    # print('Debugging: Update_tags')
-    # ad.debug_list(updated_students)
     print('\rFinished Updating Student Tags')
     return updated_students
 
