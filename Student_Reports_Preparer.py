@@ -2732,7 +2732,7 @@ def process_expiry(period):
     warnings_to_process = False
     print('\nExpiry Report data.')
     # Confirm the required files are in place
-    required_files = ['Expiry Report', 'Addresses']
+    required_files = ['Expiry Report', 'Addresses File']
     ad.confirm_files('Expiry Report', required_files)
     # Get name for Expiry Report data file and then load
     report_data, to_add, warnings_to_add = load_data('Expiry_Report_')

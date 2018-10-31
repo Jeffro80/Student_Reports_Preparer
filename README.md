@@ -205,7 +205,7 @@ CSV file with the StudentID, Student full name and Course.
 
 Active students in a course query from the Learning Platform.
 
-## addresses.csv
+## Addresses File
 
 ### File Name
 
@@ -554,15 +554,14 @@ Platform.
 - If a file name is changed the loading and loaded messages will use the old name.
 - Tutors that have been removed from the Learning Platform will be missing from
 the lastsub data for the affected students.
-- App crashes if an unknown tutor id is passed.
 
 ## Items to fix
 
-- Add check that Tutor code is present and handle if not.
+- 
 
 ## Current development step
 
-- Handling unknown Tutor IDs
+- Update file names
 
 ## Required development steps
 
