@@ -16,7 +16,7 @@ The app outputs xls files containing the report data.
 
 Version Number 1.0  
 App last updated 31 October 2018  
-Readme last updated 31 October 2018
+Readme last updated 2 November 2018
 
 # Operation
 
@@ -574,3 +574,5 @@ the lastsub data for the affected students.
 - Make Completion Mark Course Group filter automatically (look at lambda).
 - Sort Insightly Changed_Tags report on EnrolmentID.
 - Update file names (e.g. addresses.csv to be called Addresses File).
+- Automatically load source files that don't need to be specifically selected.
+- Add required file name to print out for files automatically loaded.
