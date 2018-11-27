@@ -1,5 +1,5 @@
 # Student Report Preparer
-# Version 1.0 31 October 2018
+# Version 1.0 27 November 2018
 # Created by Jeff Mitchell
 # Takes in student report output files and prepares them for sending
 # to management
@@ -569,7 +569,49 @@ def check_last_login(report_data):
         return False, warnings
 
 
-def check_last_sub_date(report_data):
+def check_last_quiz_data(report_data):
+    """Return list of warnings for information in Last Quiz Made data.
+
+    Checks the Last Quiz Made report data to see if the required 
+    information is present. Missing or incorrect information that is non-fatal
+    is appended to a warnings list and returned.
+
+    Args:
+        report_data (list): Last Quiz Date report data.
+
+    Returns:
+        True if warnings list has had items appended to it, False otherwise.
+        warnings (list): Warnings that have been identified in the data.
+
+    File Structure (report_data):
+        StudentID, Student, Course, Quiz Start
+        
+    File Source (report_data):
+        Last quiz data (all courses)
+    """
+    errors = []
+    warnings = ['\nLast Quiz Date Report Warnings:\n']
+    for student in report_data:
+        if student[1] in (None, ''):
+            warnings.append('Name is missing for student with Student ID '
+                            '{}'.format(student[0]))
+        if student[2] in (None, ''):
+            warnings.append('Course is missing for student with Student '
+                            'ID {}'.format(student[0]))
+        if student[3] in (None, ''):
+            warnings.append('Last quiz date is missing for student '
+                            'with Student ID {}'.format(student[0]))
+    # Check if any errors have been identified, save error log if they have
+    if len(errors) > 0:
+        ft.process_error_log(errors, 'Last_qiuz_date_')
+    # Check if any warnings have been identified, save error log if they have
+    if len(warnings) > 1:
+        return True, warnings
+    else:
+        return False, warnings
+
+
+def check_last_sub_data(report_data):
     """Return list of warnings for information in Last Submission Made data.
 
     Checks the Last Submission Made report data to see if the required 
@@ -587,7 +629,7 @@ def check_last_sub_date(report_data):
         StudentID, Student, Course, Tutor, Last submission date
         
     File Source (report_data):
-        Last submission date (all courses)
+        Last submission data (all courses)
     """
     errors = []
     warnings = ['\nLast Submission Date Report Warnings:\n']
@@ -1149,6 +1191,48 @@ def clean_insightly(raw_data):
     return cleaned_data
 
 
+def clean_last_quiz_date(report_data):
+    """Clean data in Last quiz date data.
+    
+    Extracts the course code and formats the Last quiz date into 
+    'DD/MM/YYYY'.
+    
+    Args:
+        report_data (list): Raw Last quiz date data.
+        
+    Returns:
+        cleaned_data (list): Last quiz date data that has been cleaned.
+    
+    File Structure (report_data):
+        StudentID, Student, Course, Last quiz date
+        
+    File Source (report_data):
+        Last quiz date (all courses)
+    """
+    cleaned_data = []
+    print('\nCleaning Last Quiz Date')
+    num_students = len(report_data) # For calculating % complete
+    n = 0
+    for student in report_data:
+        # Display progress
+        n += 1
+        progress = round((n/num_students) * 100)
+        print("\rProgress: {}{}".format(progress, '%'), end="", flush=True)
+        cleaned_student = []
+        cleaned_student.append(student[0].strip())
+        cleaned_student.append(student[1].strip())
+        cleaned_student.append(extract_course_code(student[2].strip()))
+        cleaned_student.append(extract_last_submission_date_3
+                               (student[3].strip()))
+        cleaned_data.append(cleaned_student)
+    '''
+    print('\nDebugging clean_last_subs_date')
+    ad.debug_list(cleaned_data)
+    '''
+    print('\rFinished cleaning Last Sub Date')
+    return cleaned_data
+
+
 def clean_last_subs_date(report_data):
     """Clean data in Last submissions date data.
     
@@ -1186,10 +1270,10 @@ def clean_last_subs_date(report_data):
         cleaned_student.append(extract_last_submission_date_3
                                (student[4].strip()))
         cleaned_data.append(cleaned_student)
-    
+    '''
     print('\nDebugging clean_last_subs_date')
     ad.debug_list(cleaned_data)
-    
+    '''
     print('\rFinished cleaning Last Sub Date')
     return cleaned_data
 
@@ -2307,7 +2391,12 @@ def load_data(source, f_name=''):
             for item in items_to_add:
                 warnings.append(item)
     elif source == 'Last Submission Data':
-        to_add, items_to_add = check_last_sub_date(read_data)
+        to_add, items_to_add = check_last_sub_data(read_data)
+        if to_add:
+            for item in items_to_add:
+                warnings.append(item)
+    elif source == 'Last Quiz Data':
+        to_add, items_to_add = check_last_quiz_data(read_data)
         if to_add:
             for item in items_to_add:
                 warnings.append(item)
@@ -2787,6 +2876,9 @@ def process_insightly_tags():
     File Structure (Insightly Tags Data):
         Student ID Number, First Name, Last Name, Contact Tag List
         
+    File Structure (Quizzes):
+        Student ID, Student, Course, Quiz Start.
+        
     File Structure (Submissions):
         Student ID, Student, Course, Tutor, Last submission date.
     
@@ -2802,6 +2894,9 @@ def process_insightly_tags():
     File Source (Insightly Tags):
         Insightly Data Dump (using columns listed in File structure).    
     
+    File Source (Quizzes):
+        Learning Platform reports - Last quiz date (all courses)
+        
     File Source (Submissions):
         Learning Platform reports - Last submission date (all courses)
     
@@ -2816,7 +2911,7 @@ def process_insightly_tags():
     print('\nProcessing Insightly Tags data.')
     # Confirm the required files are in place
     required_files = ['Student Database Tags', 'Tutor IDs File', 'Submissions',
-                      'Insightly Tags Data', 'Last Month Tags']
+                      'Insightly Tags Data', 'Last Month Tags', 'Quizzes']
     ad.confirm_files('Insightly Tags Report', required_files)
     # Variables for column names
     cid_name  = 'Course ID'
@@ -2888,9 +2983,17 @@ def process_insightly_tags():
         for line in warnings_to_add:
             warnings.append(line)
     # ad.debug_list(lsd_data)
-    print('\nNow processing the data. Please wait...')
     # Clean Last submissions data
     lsd_clean = clean_last_subs_date(lsd_data)
+    # Load Last quiz date information
+    lqd_data, to_add, warning_to_add = load_data('Last Quiz Data')
+    if to_add:
+        warnings_to_process = True
+        for line in warnings_to_add:
+            warnings.append(line)
+    lqd_clean = clean_last_quiz_date(lqd_data)
+    print(lqd_clean)
+    print('\nNow processing the data. Please wait...')
     # ----------------------------------------------------------------------
     # Filter out inactive students so not included in enrolment date check
     # ----------------------------------------------------------------------
