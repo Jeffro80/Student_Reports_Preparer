@@ -1278,6 +1278,75 @@ def clean_last_subs_date(report_data):
     return cleaned_data
 
 
+def combine_sub_data(last_sub, last_quiz):
+    """Return combined last_sub and last_quiz data.
+    
+    Returns the latest submission date for each student. If student appears in
+    both lists, the latest date is returned for that student. If student only
+    appears in one list, that submission date is returned.
+    
+    Args:
+        last_sub (list): Data from Last Submission (StudentID, Name, Course,
+        Tutor, last_sub_date).
+        last_quiz (list): Data from Last Quiz (StudentID, Name, Course,
+        last_quiz_date).
+    
+    Returns:
+        combined_data (list): Student data with last student date added.
+    """
+    combined_data = []
+    # Get a list of student ids i last_sub
+    last_sub_students = ad.extract_list_item(last_sub, 0)
+    # Get a list of student ids in last_quiz
+    last_quiz_students = ad.extract_list_item(last_quiz, 0)
+    print('\nCombining Last Submission and Last Quiz Data')
+    num_students = len(last_sub) + len(last_quiz) # For calculating % complete
+    n = 0
+    # Work through last_sub data
+    for student in last_sub:
+        # Display progress
+        n += 1
+        progress = round((n/num_students) * 100)
+        print("\rProgress: {}{}".format(progress, '%'), end="", flush=True)
+        cleaned_student = []
+        cleaned_student.append(student[0]) # Add Student ID
+        cleaned_student.append(student[1]) # Add Name
+        cleaned_student.append(student[2]) # Add Course
+        cleaned_student.append(student[3]) # Add Tutor
+        if student[0] in last_quiz_students:
+            # Need to find latest date
+            for quiz_student in last_quiz: # Find student in last_quiz
+                if quiz_student[0] == student[0]:
+                    # Find latest date
+                    if student[4] > quiz_student[3]:
+                        # Add date from last_sub
+                        cleaned_student.append(student[4])
+                    else:
+                        # Add date from last_quiz
+                        cleaned_student.append(quiz_student[3])
+                    break
+            combined_data.append(cleaned_student)
+        else:
+            cleaned_student.append(student[4]) # Add date from last_sub
+            combined_data.append(cleaned_student)
+    # Work through last_quiz data to get student that are in last_sub data
+    for student in last_quiz:
+        # Display progress
+        n += 1
+        progress = round((n/num_students) * 100)
+        print("\rProgress: {}{}".format(progress, '%'), end="", flush=True)
+        if student[0] not in last_sub_students:
+            # Add student to combined data
+            cleaned_student = []
+            cleaned_student.append(student[0]) # Add Student ID
+            cleaned_student.append(student[1]) # Add Name
+            cleaned_student.append(student[2]) # Add Course
+            cleaned_student.append('') # Add blank for Tutor
+            cleaned_student.append(student[3]) # Add last quiz date
+            combined_data.append(cleaned_student)
+    return combined_data            
+
+
 def convert_e_date(students, sd_df_students):
     """Return student list with tag based on last submission date.
     
@@ -2992,13 +3061,20 @@ def process_insightly_tags():
         for line in warnings_to_add:
             warnings.append(line)
     lqd_clean = clean_last_quiz_date(lqd_data)
-    print(lqd_clean)
+    # print(lqd_clean)
     print('\nNow processing the data. Please wait...')
     # ----------------------------------------------------------------------
     # Filter out inactive students so not included in enrolment date check
     # ----------------------------------------------------------------------
     # Get a list of the Student ID's in sd_df (minus inactive)
     sd_df_students = get_sd_df_students(sd_df, sid_name, tag_name)
+    # TO DO
+    # Combine lsd_clean and lqd_clean into one list
+    combined_subs = combine_sub_data(lsd_clean, lqd_clean)
+    print(combined_subs)
+    # Last_sub column to be latest date from lsd and lqd, or date if only
+    # present in one list
+    # Rename tags below
     # Convert Enrolment Date to a Status Tag - only for Active students
     lsd_tags = convert_e_date(lsd_clean, sd_df_students)    
     # Get a list of students in lsd_tags
