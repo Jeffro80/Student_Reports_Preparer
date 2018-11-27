@@ -2982,8 +2982,9 @@ def process_insightly_tags():
     warnings_to_process = False
     print('\nProcessing Insightly Tags data.')
     # Confirm the required files are in place
-    required_files = ['Student Database Tags', 'Tutor IDs File', 'Submissions',
-                      'Insightly Tags Data', 'Last Month Tags', 'Quizzes']
+    required_files = ['Student Database Tags', 'Tutor IDs File', 
+                      'Last Quiz File', 'Last Submission File',
+                      'Insightly Tags Data', 'Last Month Tags']
     ad.confirm_files('Insightly Tags Report', required_files)
     # Variables for column names
     cid_name  = 'Course ID'
