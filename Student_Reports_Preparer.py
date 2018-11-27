@@ -1,5 +1,5 @@
 # Student Report Preparer
-# Version 1.0 27 November 2018
+# Version 1.0 28 November 2018
 # Created by Jeff Mitchell
 # Takes in student report output files and prepares them for sending
 # to management
@@ -1318,7 +1318,10 @@ def combine_sub_data(last_sub, last_quiz):
             for quiz_student in last_quiz: # Find student in last_quiz
                 if quiz_student[0] == student[0]:
                     # Find latest date
-                    if student[4] > quiz_student[3]:
+                    sub_date = da.convert_to_datetime(student[4], '%d/%m/%Y')
+                    quiz_date = da.convert_to_datetime(quiz_student[3],
+                                                       '%d/%m/%Y')
+                    if sub_date > quiz_date:
                         # Add date from last_sub
                         cleaned_student.append(student[4])
                     else:
@@ -3070,7 +3073,6 @@ def process_insightly_tags():
     sd_df_students = get_sd_df_students(sd_df, sid_name, tag_name)
     # Combine lsd_clean and lqd_clean into one list
     combined_subs = combine_sub_data(lsd_clean, lqd_clean)
-    print(combined_subs)
     # Rename tags below
     # Convert Enrolment Date to a Status Tag - only for Active students
     combined_tags = convert_e_date(combined_subs, sd_df_students)    
@@ -3091,8 +3093,6 @@ def process_insightly_tags():
     student_tags = get_tags(combined_tags, black, red, orange, green)
     # Determine Tag for each student
     updated_tags = update_tags(student_tags)
-    # print('Updated: tags:')
-    # print(updated_tags)
     # Create a list of Student ID's for students with Purple Tags
     purple = get_purple(id_df, sid_name, tag_name)
     # Overwrite purple students
