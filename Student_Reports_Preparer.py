@@ -1859,32 +1859,6 @@ def get_id_changes(tags_df, id_df, headings, tag_name):
     return changed_students
 
 
-def get_lsd_tags_students(students, valid_students, location):
-    """Return list of Student IDs from data.
-    
-    Args:
-        students (list): Student Data.
-        valid_students (list): Students that are to be included.
-        location (int): Location of Student ID in string.
-    
-    Returns:
-        student_ids (list): List of Student ID numbers.
-    """
-    student_ids = []
-    print('\nGetting Student ID\'s')
-    num_students = len(students) # For calculating % complete
-    n = 0
-    for student in students:
-        # Display progress
-        n += 1
-        progress = round((n/num_students) * 100)
-        print("\rProgress: {}{}".format(progress, '%'), end="", flush=True)
-        if student[location] in valid_students:
-            student_ids.append(student[location])
-    print('\rFinished getting Student ID\'s')
-    return student_ids
-
-
 def get_purple(id_df, sid_name, tag_name):
     """Return a list of students with Purple for status.
     
@@ -2110,6 +2084,32 @@ def get_tags(students, black, red, orange, green):
         updated_students.append(updated_student)
     print('\rFinished getting Student Tags')
     return updated_students
+
+
+def get_tags_students(students, valid_students, location):
+    """Return list of Student IDs from data.
+    
+    Args:
+        students (list): Student Data.
+        valid_students (list): Students that are to be included.
+        location (int): Location of Student ID in string.
+    
+    Returns:
+        student_ids (list): List of Student ID numbers.
+    """
+    student_ids = []
+    print('\nGetting Student ID\'s')
+    num_students = len(students) # For calculating % complete
+    n = 0
+    for student in students:
+        # Display progress
+        n += 1
+        progress = round((n/num_students) * 100)
+        print("\rProgress: {}{}".format(progress, '%'), end="", flush=True)
+        if student[location] in valid_students:
+            student_ids.append(student[location])
+    print('\rFinished getting Student ID\'s')
+    return student_ids
 
 
 def get_tags_values(students):
@@ -3068,29 +3068,27 @@ def process_insightly_tags():
     # ----------------------------------------------------------------------
     # Get a list of the Student ID's in sd_df (minus inactive)
     sd_df_students = get_sd_df_students(sd_df, sid_name, tag_name)
-    # TO DO
     # Combine lsd_clean and lqd_clean into one list
     combined_subs = combine_sub_data(lsd_clean, lqd_clean)
     print(combined_subs)
-    # Last_sub column to be latest date from lsd and lqd, or date if only
-    # present in one list
     # Rename tags below
     # Convert Enrolment Date to a Status Tag - only for Active students
-    lsd_tags = convert_e_date(lsd_clean, sd_df_students)    
-    # Get a list of students in lsd_tags
-    lsd_tags_students = get_lsd_tags_students(lsd_tags, sd_df_students, 0)
-    # Get list of students missing from lsd_tags
-    missing_students = find_missing(sd_df_students, lsd_tags_students)
-    # Add missing active students and their details to the lsd_tags data
+    combined_tags = convert_e_date(combined_subs, sd_df_students)    
+    # Get a list of students in combined_tags
+    combined_tags_students = get_tags_students(combined_tags, sd_df_students,
+                                               0)
+    # Get list of students missing from combined_tags
+    missing_students = find_missing(sd_df_students, combined_tags_students)
+    # Add missing active students and their details to the combined_tags data
     # Set tag to 'Black' as have not submitted and zones will correct
-    lsd_tags = add_missing(lsd_tags, sd_df, tutors, missing_students,
+    combined_tags = add_missing(combined_tags, sd_df, tutors, missing_students,
                            fname_name, lname_name, tid_name, sid_name,
                            cid_name)
     # Create Tag Zone lists (Max tag a student can have based on enrolment)
     en_dates = get_enrol_dates(sd_df, sid_name, sdate_name, sd_df_students)
     black, red, orange, green = get_colour(en_dates)
     # Create a list to hold StudentID, sub_tag, zone
-    student_tags = get_tags(lsd_tags, black, red, orange, green)
+    student_tags = get_tags(combined_tags, black, red, orange, green)
     # Determine Tag for each student
     updated_tags = update_tags(student_tags)
     # print('Updated: tags:')
