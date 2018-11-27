@@ -15,8 +15,8 @@ The app outputs xls files containing the report data.
 ## Version
 
 Version Number 1.0  
-App last updated 31 October 2018  
-Readme last updated 2 November 2018
+App last updated 28 November 2018  
+Readme last updated 28 November 2018
 
 # Operation
 
@@ -82,6 +82,14 @@ by tutor)
 Prepares a number of reports showing the changes that need to be made to Insightly
 tags and statistics on the number of students allocated each tag.
 
+### Required Files
+
+- Insightly Tags Data
+- Last Month Tags
+- Last Quiz File
+- Last Submission File
+- Student Database Tags
+- Tutor IDs File
 
 ## Prepare Last Login Report
 
@@ -354,6 +362,48 @@ Updated_Tags.
 
 Updated_Tags...csv file from the previous month.
 
+## Last Quiz File
+
+### File Name
+
+lastquiz.csv
+
+### Contents
+
+Last attempt start date for a quiz for each student in the Learning Platform for all
+courses.
+
+### Structure
+
+CSV file with the StudentID, Student full name, Course and Last Quiz attempt date. 
+
+### Source
+
+Last quiz attempt report from the Learning Platform.
+
+## Last Submission File
+
+### File Name
+
+lastsub.csv
+
+### Contents
+
+Last submission date for each student in the Learning Platform for all courses.
+
+### Structure
+
+CSV file with the StudentID, Student full name, Course, Tutor and Last submission
+date. 
+
+### Source
+
+Last submission date (all courses) report from the Learning Platform.
+
+### Notes
+
+Make sure the Last submission date column is in the format DD/MM/YYYY.
+
 ## Never Logged In Report
 
 ### File Name
@@ -434,29 +484,6 @@ CSV file with the Course, Tutor, StudentID and Student full name.
 ### Source
 
 Students in Tutor Group report from the Learning Platform.
-
-## Submissions
-
-### File Name
-
-lastsub.csv
-
-### Contents
-
-Last submission date for each student in the Learning Platform for all courses.
-
-### Structure
-
-CSV file with the StudentID, Student full name, Course, Tutor and Last submission
-date. 
-
-### Source
-
-Last submission date (all courses) report from the Learning Platform.
-
-### Notes
-
-Make sure the Last submission date column is in the format DD/MM/YYYY.
 
 ## Submissions Made Report
 
